@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 
 const TopicSchema = new mongoose.Schema({
 	name: {
@@ -6,6 +6,10 @@ const TopicSchema = new mongoose.Schema({
 		required: true,
 		unique: true,
 	},
+	unitIds: [{
+		type: Types.ObjectId,
+		ref: 'Unit'
+	}],
 	createdAt: {
 		type: Date,
 		default: Date.now,

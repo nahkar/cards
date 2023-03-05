@@ -11,4 +11,4 @@ router.route('/')
 	.get(topicController.getTopics.bind(topicController))
 	.post(body('name').isString(),topicController.createTopic.bind(topicController));
 
-export { router as topicsRouter };
+export { router as topicRouter };

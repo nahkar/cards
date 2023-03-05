@@ -1,18 +1,28 @@
-import { Model, Schema } from 'mongoose';
+import mongoose, { Schema, Types } from 'mongoose';
 
-const UnitSchema = new Schema({
-	word: {
-		type: String,
-		required: true,
+export const UnitSchema = new Schema({
+	topicId: {
+		type: Types.ObjectId,
+		ref: 'Topic',
 	},
-	translate: {
+	name: {
 		type: String,
 		require: true,
 	},
-	isMemorized: {
-		type: Boolean,
-		default: false,
-	}
+	words: [{
+		word: {
+			type: String,
+			required: true,
+		},
+		translate: {
+			type: String,
+			require: true,
+		},
+		isMemorized: {
+			type: Boolean,
+			default: false,
+		}
+	}],
 });
 
-export const UnitModel = new Model('Unit', UnitSchema);
+export const Unit = mongoose.model('Unit', UnitSchema);
