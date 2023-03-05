@@ -1,5 +1,6 @@
 import { Topic } from '@models/Topic.model';
-import { CreateTopicPropsT } from './types/topic.types';
+
+import type { CreateTopicPropsT } from './types/topic.types';
 
 export class TopicRepository {
 	constructor(private topicModel = Topic) {}

@@ -1,8 +1,11 @@
-import type { NextFunction, Request, Response } from 'express';
-import { TopicService } from './topic.service';
 import { validationResult } from 'express-validator';
 import { ApiError } from '@exceptions/ApiError';
+import httpStatus from 'http-status';
+
+import { TopicService } from './topic.service';
 import { TopicDtoRequest } from './dto/TopicDtoRequest';
+
+import type { NextFunction, Request, Response } from 'express';
 
 export class TopicController {
 	constructor(private topicService = new TopicService()) {}
@@ -24,10 +27,10 @@ export class TopicController {
 			if (!errors.isEmpty()) {
 				return next(ApiError.BadRequest('Validation Error', errors.array()));
 			}
-			
+
 			const topic = await this.topicService.createTopic(new TopicDtoRequest(req.body));
 
-			res.status(201).json(topic);
+			res.status(httpStatus.CREATED).json(topic);
 		} catch (error) {
 			next(error);
 		}

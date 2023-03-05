@@ -1,7 +1,9 @@
-import { ApiError } from "@exceptions/ApiError";
-import { TopicDtoResponse } from "./dto/TopicDtoResponse";
-import { TopicRepository } from "./topic.repository";
-import { CreateTopicPropsT } from "./types/topic.types";
+import { ApiError } from '@exceptions/ApiError';
+
+import { TopicDtoResponse } from './dto/TopicDtoResponse';
+import { TopicRepository } from './topic.repository';
+
+import type { CreateTopicPropsT } from './types/topic.types';
 
 export class TopicService {
 	constructor(private topicRepository = new TopicRepository()) {}
@@ -9,7 +11,7 @@ export class TopicService {
 	async getTopics() {
 		const topics = await this.topicRepository.find();
 
-		const response = topics.map(topic => new TopicDtoResponse(topic))
+		const response = topics.map(topic => new TopicDtoResponse(topic));
 		return response;
 	}
 
@@ -18,7 +20,7 @@ export class TopicService {
 		const isExist = await this.topicRepository.isExist(props);
 
 		if(isExist) {
-			throw ApiError.BadRequest("This topic's name is already exists");
+			throw ApiError.BadRequest('This topic\'s name is already exists');
 		}
 
 		const topic = await this.topicRepository.create(props);

@@ -1,4 +1,4 @@
-import { ITopic } from "@interfaces/topic.interface";
+import type { ITopic } from '@interfaces/topic.interface';
 
 export class TopicDtoRequest {
 	name: string;
