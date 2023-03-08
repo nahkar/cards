@@ -11,4 +11,7 @@ router.route('/')
 	.get(topicController.getTopics.bind(topicController))
 	.post(body('name').isString(),topicController.createTopic.bind(topicController));
 
+router.route('/:id')
+	.get(topicController.getTopic.bind(topicController));
+
 export { router as topicRouter };

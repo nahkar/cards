@@ -1,6 +1,8 @@
 import { Topic } from '@models/Topic.model';
+import { ApiError } from '@exceptions/ApiError';
 
-import type { CreateTopicPropsT } from './types/topic.types';
+import type { ITopic } from '@interfaces/topic.interface';
+import type { CreateTopicDtoRequest } from './dto/CreateTopicDtoRequest';
 
 export class TopicRepository {
 	constructor(private topicModel = Topic) {}
@@ -9,14 +11,23 @@ export class TopicRepository {
 		return topics;
 	}
 
-	async create({ name }: CreateTopicPropsT) {
+	async create({ name }: CreateTopicDtoRequest) {
 		const topic =  this.topicModel.create({ name });
 		return topic;
 	}
 
-	async isExist(props: CreateTopicPropsT) {
+	async isExist(props: Partial<ITopic>) {
 		const isExist = await this.topicModel.exists(props);
-
 		return isExist;
+	}
+
+	async findById(id: string) {
+		const topic = await this.topicModel.findById(id);
+
+		if(!topic){
+			throw ApiError.BadRequest('Topic does not exist');
+		}
+
+		return topic;
 	}
 }

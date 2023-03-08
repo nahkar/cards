@@ -1,11 +1,8 @@
 import type { ITopic } from '@interfaces/topic.interface';
 
-export class TopicDtoResponse {
-	id: string;
+export class CreateTopicDtoRequest {
 	name: string;
 	constructor(model: ITopic) {
-		this.id = model._id.toString();
 		this.name = model.name;
-
 	}
 }

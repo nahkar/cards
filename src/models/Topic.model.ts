@@ -1,4 +1,6 @@
-import mongoose, { Types } from 'mongoose';
+import mongoose from 'mongoose';
+
+import type { ITopic } from '@interfaces/topic.interface';
 
 const TopicSchema = new mongoose.Schema({
 	name: {
@@ -6,14 +8,19 @@ const TopicSchema = new mongoose.Schema({
 		required: true,
 		unique: true,
 	},
-	unitIds: [{
-		type: Types.ObjectId,
-		ref: 'Unit'
-	}],
 	createdAt: {
 		type: Date,
 		default: Date.now,
 	},
+},{
+	id: true,
+	toJSON: {
+		virtuals: true,
+	},
+	toObject: {
+		virtuals: true,
+	},
+	versionKey: false,
 });
 
-export const Topic = mongoose.model('Topic', TopicSchema);
+export const Topic = mongoose.model<ITopic>('Topic', TopicSchema);

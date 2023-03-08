@@ -1,21 +1,26 @@
 import { ApiError } from '@exceptions/ApiError';
+import { UnitService } from '@modules/unit/unit.service';
 
-import { TopicDtoResponse } from './dto/TopicDtoResponse';
 import { TopicRepository } from './topic.repository';
 
-import type { CreateTopicPropsT } from './types/topic.types';
+import type { CreateTopicDtoRequest } from './dto/CreateTopicDtoRequest';
 
 export class TopicService {
-	constructor(private topicRepository = new TopicRepository()) {}
+	constructor(private topicRepository = new TopicRepository(), private unitService = new UnitService()) {}
 
 	async getTopics() {
 		const topics = await this.topicRepository.find();
 
-		const response = topics.map(topic => new TopicDtoResponse(topic));
-		return response;
+		return topics;
 	}
 
-	async createTopic(props: CreateTopicPropsT) {
+	async getTopic(id: string) {
+		const topic = await this.topicRepository.findById(id);
+		const units = await this.unitService.getUnits(id);
+		return { topic, units };
+	}
+
+	async createTopic(props: CreateTopicDtoRequest) {
 
 		const isExist = await this.topicRepository.isExist(props);
 
@@ -25,6 +30,6 @@ export class TopicService {
 
 		const topic = await this.topicRepository.create(props);
 
-		return new TopicDtoResponse(topic);
+		return topic;
 	}
 }
